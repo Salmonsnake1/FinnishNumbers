@@ -15,5 +15,5 @@ toggle between numeric and word form. All singular cases except instructive are 
 - Timed mode 
 
 ## Known issues
-- Layout issues - text version of numbers don't line up nicely.
+- Layout issues - e.g. text version of numbers don't line up nicely.
 - Responsive design is lacking.
