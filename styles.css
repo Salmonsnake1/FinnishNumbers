@@ -6,7 +6,7 @@
     font-weight: bold;
     padding: 20px 0;
 }
-
+/* Adds to the .numBox when of a certain string length. */
 .textBox {
     margin-left: -30px;
 }
@@ -22,7 +22,7 @@ label {
 input {
     max-width: 89%;
 }
-
+/* keeps input same size as switch and gen buttons, switchButton doesnt reduce when text changes */
 #input {
     max-width: 100%;
     width: 346px;

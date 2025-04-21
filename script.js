@@ -1,13 +1,3 @@
-let max = 1000001; // can we remove these somehow
-let min = 0; // can we remove these somehow
-let ranNum = 0; // sets the ranNum
-let caseChoice = "nominative"; // ensures nominative first
-let wordAnswer = ""; // ready for user input
-let count = 0; // ready to track user progress
-let streak = 0;
-let cases = {}; // for my json file
-let numView = true;
-
 const genButton = document.getElementById("genButton");
 const inputForm = document.getElementById("form");
 const switchButton = document.getElementById("switchButton");
@@ -15,15 +5,26 @@ const radioButtons = document.querySelectorAll('input[name="ranges"]');
 const customInputs = document.getElementById('customRangeInputs');
 const input = document.getElementById("input");
 
+
+let max = 100; // initial max range 
+let min = 0; // initial min range
+let ranNum = 0; // stores current generated nmber
+let caseChoice = "nominative"; // default grammatical case
+let wordAnswer = ""; // correct answer in text
+let count = 0; // current streak
+let streak = 0; // highest streak
+let cases = {}; // holds case data from JSON 
+let numView = true; // number is shown when true, word when false
+
 // Event listeners
-
-
+// Enter in input textArea
 input.addEventListener("keydown", function(event) {
   if (event.key === "Enter") {
     event.preventDefault();
 
     const inputValue = document.getElementById("input").value;
 
+    // validates answer and returns corresponding error message. numView wants a text answer, !numView wants a number answer
     if (inputValue === "") {
       checkAnswer();
       return;
@@ -36,18 +37,18 @@ input.addEventListener("keydown", function(event) {
       checkAnswer();
       return;
     }
-
+    // checks answer correctness and generates a new number
     checkAnswer();
     genRanNum();
   }
 });
-
+// Resets input field size after submitting answer
 input.addEventListener("input", function () {
-  this.style.height = "auto";       // Reset height
-  this.style.height = this.scrollHeight + "px"; // Set to full height
+  this.style.height = "auto";      
+  this.style.height = this.scrollHeight + "px"; 
 });
 
-// makes sure customMin can not go outside range
+// Prevents customMin going out range limits (0-1000000)
 document.getElementById("customMin").addEventListener('input', function () {
   let customMin = this.value.trim();
   
@@ -72,7 +73,7 @@ document.getElementById("customMin").addEventListener('input', function () {
   }
 });
 
-// makes sure customMax can not go outside range
+// Prevents customMax going out range limits (0-1000000)
 document.getElementById("customMax").addEventListener('input', function () {
   let customMax = this.value.trim(); 
   
@@ -97,7 +98,7 @@ document.getElementById("customMax").addEventListener('input', function () {
   }
 });
 
-// deals with the visual of custom.
+// Makes min max fields visible when custom range selected
 radioButtons.forEach((radio) => {
   radio.addEventListener('change', () => {
     if (radio.value === 'custom') {
@@ -107,26 +108,67 @@ radioButtons.forEach((radio) => {
     }
   });
 });
-// generating new number
+
+// Generates a new number when gen button clicked
 genButton.addEventListener("click", function(event) {
     genRanNum();
 });
 
-// switching between text and number
+// Toggles between digit and word view of the number
 switchButton.addEventListener("click", function(event) {
   switchRan();
 });
 
-// starting script
+// Updates range values to match custom selected
+document.getElementById("customRangeInputs").addEventListener("change", () => {
+  const customMin = parseInt(document.getElementById("customMin").value, 10);
+  const customMax = parseInt(document.getElementById("customMax").value, 10);
+
+  rangeChange(customMin, customMax);
+  genRanNum();
+});
+
+//querySelectors
+// Range values update accordingly based on range selection
+document.querySelectorAll('input[name="ranges"]').forEach((input) => {
+  input.addEventListener('change', (e) => {
+      const radioValue = e.target.value;
+      // Ensures on custom select 1 and 10 is default
+      if (radioValue === "custom") {
+        rangeChange(1, 10);
+        document.getElementById("customMin").value = 1;
+        document.getElementById("customMax").value = 10;
+        genRanNum();
+
+      } else {
+      const [minVal, maxVal] = e.target.value.split('-').map(Number);
+      rangeChange(minVal, maxVal);
+      genRanNum();
+      }
+  });
+});
+
+// Updates case based on selection
+document.querySelectorAll('input[name="cases"]').forEach((input) => {
+input.addEventListener('change', (e) => {
+    caseChoice = e.target.value;
+    genRanNum();
+    console.log(caseChoice);
+    console.log(wordAnswer);
+});
+});
+
+// Starts the program
 startProg();
 
-// starts the program and ensures json is loaded first
+//Functions
+// Ensures json file loads first then generates a number.
 async function startProg() {
   await loadCases();     
   genRanNum();                
 }
 
-// loading my json file
+// Loading json file to cases
 async function loadCases() {
   try {
     const response = await fetch('./cases.json');
@@ -138,51 +180,15 @@ async function loadCases() {
   }
 }
 
-// this changes the range values to match the selected
-document.querySelectorAll('input[name="ranges"]').forEach((input) => {
-    input.addEventListener('change', (e) => {
-        const radioValue = e.target.value;
 
-        if (radioValue === "custom") {
-          rangeChange(1, 10);
-          document.getElementById("customMin").value = 1;
-          document.getElementById("customMax").value = 10;
-          genRanNum();
 
-        } else {
-        const [minVal, maxVal] = e.target.value.split('-').map(Number);
-        rangeChange(minVal, maxVal);
-        genRanNum();
-        }
-    });
-});
-
-// this changes the cases
-document.querySelectorAll('input[name="cases"]').forEach((input) => {
-  input.addEventListener('change', (e) => {
-      caseChoice = e.target.value;
-      genRanNum();
-      console.log(caseChoice);
-      console.log(wordAnswer);
-  });
-});
-
-// this deals with the custom range - need to error catch, add event listeners so it does it correctly when selected etc
-document.getElementById("customRangeInputs").addEventListener("change", () => {
-    const customMin = parseInt(document.getElementById("customMin").value, 10);
-    const customMax = parseInt(document.getElementById("customMax").value, 10);
-
-    rangeChange(customMin, customMax);
-    genRanNum();
-});
-
-// sets the range based on what is selected from the choices in list
+// Sets new range for num generation based on user selection
 function rangeChange(lowest, highest) {
     min = lowest;
     max = highest;
 }
 
-// this generates a random number that is inclusive to both min and max. Need to think about let max and min and about doing it another way
+// Generates a random number based on min max ranges, they are inclusive.
 function genRanNum() {
     if (isNaN(min) || isNaN(max)) {
       console.error("Min and max range are not valid numbers");
@@ -208,10 +214,11 @@ function genRanNum() {
     
 }
 
-// converts number into word form to check against user input
+// Converts number into word form
 function defineAnswer() {
+  // checks for above million because can expand up to million million later potentially
   if (ranNum >= 1000000) {
-    wordAnswer = cases[ranNum][caseChoice]
+    wordAnswer = cases[ranNum][caseChoice] 
     console.log(wordAnswer);
     return;
   }
@@ -229,9 +236,7 @@ function defineAnswer() {
   }
 }
 
-// creates the word form for the hundreds
-// could add error check like if case not found for hundreds, tens, ones etc, could see if thousands need the same
-// could split the functions down like could have a get tens function, a get teens function, a get ones function
+// Converts the number to word for the hundreds, tens and ones.
 function getHundreds(number) {
   let hundreds = Math.floor(number / 100);
   let tens = Math.floor((number % 100) / 10);
@@ -270,7 +275,7 @@ function getHundreds(number) {
   return numParts.join("");
 }
 
-// creates word form for thousands
+// Converts the number to word for thousands and getHundreds added from above if needed.
 function getThousands(number) {
   let thousands = Math.floor(number / 1000);
   let hundreds = number % 1000;
@@ -291,7 +296,7 @@ function getThousands(number) {
   return numParts.join("");
 }
 
-// checks the user answer against correct answer, checks if its string or number and updates count accordingly
+// Checks user answer against correct answer so either number in digit or word form
 function checkAnswer() {
   const answer = document.getElementById("input").value.trim().toLowerCase();
   let correctAns = false;
@@ -342,7 +347,7 @@ function checkAnswer() {
   count = 0;
 }
 
-// switching button so switches to word or number, and this in turn is checked by the input
+// Switches between number and text display
 function switchRan() {
   genRanNum();
   
@@ -363,12 +368,12 @@ function switchRan() {
   checkTextOrNum();
 }
 
-// function for setting case for joining numbers
+// Ensures "connecting" numbers like ten, hundred, thousand are in partitive when the overall case is nominative, otherwise matching case.
 function joinNumCaseSwitch() {
     return (caseChoice === "nominative") ? "partitive" : caseChoice;
 }
 
-// function for switching the margin if text
+// Adds .textBox styling if the number is displayed as text - margin-left. Temporary fix for readability.
 function checkTextOrNum() {
   const numBox = document.getElementById("numBox");
 
