@@ -1,0 +1,40 @@
+.numBox {
+    width: auto;
+    max-width: 80%;
+    margin: 0 auto;
+    font-size: 3rem; 
+    font-weight: bold;
+    padding: 20px 0;
+}
+
+.textBox {
+    margin-left: -30px;
+}
+
+details li {
+    margin-bottom: 0.5rem; 
+}
+
+label {
+    margin-left: 0.5rem;
+}
+
+input {
+    max-width: 89%;
+}
+
+#input {
+    max-width: 100%;
+    width: 346px;
+    resize: none;
+    overflow: hidden;
+}
+
+#switchButton {
+    min-width: 155px; 
+  }
+
+#genButton {
+    min-width: 187px;
+}
+
