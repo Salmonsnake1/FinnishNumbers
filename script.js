@@ -329,7 +329,6 @@ function checkAnswer() {
 
   if (correctAns) {
     count++;
-    streak++;
     document.getElementById("countBox").textContent = "Current Streak: " + count;
     document.getElementById("input").value = "";
     return;
