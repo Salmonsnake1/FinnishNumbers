@@ -301,7 +301,6 @@ function checkAnswer() {
   const answer = document.getElementById("input").value.trim().toLowerCase();
   let correctAns = false;
   let shownAns = "";
-  
   console.log(answer);
   console.log(wordAnswer);
 
