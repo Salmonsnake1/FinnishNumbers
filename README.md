@@ -1,7 +1,7 @@
 # Finnish Number Practice
 
 Small personal practice project that was designed for practicing Finnish numbers and their inflections. A number is randomly generated and the user can attempt to write the correct answer. The user can also 
-toggle between numeric and word form. All singular cases except instructive are able to be practiced. The maximum range is 0 - 1000000. 
+toggle between numeric and word form. All singular cases except instructive are avaiable for practice. The maximum range is 0 - 1000000. 
 
 ## Features
 - Basic scoring and streak system
