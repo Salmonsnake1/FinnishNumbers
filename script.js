@@ -18,6 +18,7 @@ let cases = {}; // holds case data from JSON
 let ordinalCases = {}; // holds ordinalcase data from JSON
 let numView = true; // number is shown when true, word when false
 let ordinalView = false;
+let ekatokaAnswer = "";
 
 // Event listeners
 // Enter in input textArea
@@ -321,6 +322,15 @@ function getHundreds(number) {
       }
 
       if (ones > 0) {
+        if (ordinalView && (ones === 1 || ones === 2)) {
+          let onesChoice = "";
+          (ones === 1) ? onesChoice = "eka" : ones;
+          (ones === 2) ? onesChoice = "toka" : ones;
+          let ekaTokaParts = [...numParts];
+          ekaTokaParts.push(numType[onesChoice][caseChoice]);
+          ekatokaAnswer = ekaTokaParts.join("");
+          console.log(ekatokaAnswer);
+        }
         numParts.push(numType[ones][caseChoice]);
       } 
     }
@@ -372,6 +382,11 @@ function checkAnswer() {
       return;
     }
     correctAns = (answer === wordAnswer);
+
+    if (ordinalView) {
+      correctAns = (answer === wordAnswer || answer === ekatokaAnswer);
+    }
+
     shownAns = wordAnswer;
   } else {
     if (isNaN(answer)) {
