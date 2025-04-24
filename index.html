@@ -23,15 +23,20 @@
             <div class="col-md-8 text-start ms-auto">
             <section>
                 <button class="btn btn-primary" id="switchButton">Switch to Text</button>
-                <button id="genButton" class="btn btn-primary">Generate new number</button> 
-                <p id="numBox" class="numBox"></p>   
+                
+                <button class="btn btn-primary" id="ordButton">Switch to Ordinals</button>
+                <p id="numBox" class="numBox"></p>
+                <p id="displayCase"></p>   
                 <form id="form">
                     <div class="row">
                         <div class="col-12 col-md-6">
                           <textarea id="input" class="form-control mb-4 auto-expand" rows="1" autocomplete="off"></textarea>
                         </div>
+                        
                     </div>
-                </form>
+                    <button class="btn btn-primary" id="ansButton">Submit Answer</button>
+                 </form>
+                 <button id="genButton" class="btn btn-primary">Generate new number</button>
             </section>
 
             <section>
@@ -69,25 +74,25 @@
                   <div class="row">
                     <div class="col-md-4">
                       <ul class="list-unstyled py-2">
-                        <li><input type="radio" id="case1" name="cases" value="nominative" checked> <label for="caseChoice1">Nominative</label></li>
-                        <li><input type="radio" id="case2" name="cases" value="genitive"> <label for="caseChoice2">Genitive (-n)</label></li>
-                        <li><input type="radio" id="case3" name="cases" value="partitive"> <label for="caseChoice3">Partitive (-A, -tA) </label></li>
-                        <li><input type="radio" id="case4" name="cases" value="inessive"> <label for="caseChoice4">Inessive (-ssA)</label></li>
-                        <li><input type="radio" id="case5" name="cases" value="elative"> <label for="caseChoice5">Elative (-stA)</label></li>
-                        <li><input type="radio" id="case6" name="cases" value="illative"> <label for="caseChoice6">Illative (-Vn, -hVn, -seen) </label></li>
-                        <li><input type="radio" id="case7" name="cases" value="adessive"> <label for="caseChoice7">Adessive (-llA)</label></li>
+                        <li><input type="checkbox" id="case1" name="cases" value="nominative" checked> <label for="caseChoice1">Nominative</label></li>
+                        <li><input type="checkbox" id="case2" name="cases" value="genitive"> <label for="caseChoice2">Genitive (-n)</label></li>
+                        <li><input type="checkbox" id="case3" name="cases" value="partitive"> <label for="caseChoice3">Partitive (-A, -tA) </label></li>
+                        <li><input type="checkbox" id="case4" name="cases" value="inessive"> <label for="caseChoice4">Inessive (-ssA)</label></li>
+                        <li><input type="checkbox" id="case5" name="cases" value="elative"> <label for="caseChoice5">Elative (-stA)</label></li>
+                        <li><input type="checkbox" id="case6" name="cases" value="illative"> <label for="caseChoice6">Illative (-Vn, -hVn, -seen) </label></li>
+                        <li><input type="checkbox" id="case7" name="cases" value="adessive"> <label for="caseChoice7">Adessive (-llA)</label></li>
                       </ul>
                     </div>
               
                     <div class="col-md-4">
                       <ul class="list-unstyled py-2">
-                        <li><input type="radio" id="case8" name="cases" value="ablative"> <label for="caseChoice8">Ablative (-ltA)</label></li>
-                        <li><input type="radio" id="case9" name="cases" value="allative"> <label for="caseChoice9">Allative (-lle)</label></li>
-                        <li><input type="radio" id="case10" name="cases" value="essive"> <label for="caseChoice10">Essive (-nA)</label></li>
-                        <li><input type="radio" id="case11" name="cases" value="translative"> <label for="caseChoice11">Translative (-ksi)</label></li>
-                        <li><input type="radio" id="case12" name="cases" value="abessive"> <label for="caseChoice12">Abessive (-ttA)</label></li>
-                        <!-- <li><input type="radio" id="case13" name="cases" value="instructive"> <label for="caseChoice13">Instructive</label></li> -->
-                        <li><input type="radio" id="case13" name="cases" value="comitative"> <label for="caseChoice13">Comitative (-ne)</label></li>
+                        <li><input type="checkbox" id="case8" name="cases" value="ablative"> <label for="caseChoice8">Ablative (-ltA)</label></li>
+                        <li><input type="checkbox" id="case9" name="cases" value="allative"> <label for="caseChoice9">Allative (-lle)</label></li>
+                        <li><input type="checkbox" id="case10" name="cases" value="essive"> <label for="caseChoice10">Essive (-nA)</label></li>
+                        <li><input type="checkbox" id="case11" name="cases" value="translative"> <label for="caseChoice11">Translative (-ksi)</label></li>
+                        <li><input type="checkbox" id="case12" name="cases" value="abessive"> <label for="caseChoice12">Abessive (-ttA)</label></li>
+                        <!-- <li><input type="checkbox" id="case13" name="cases" value="instructive"> <label for="caseChoice13">Instructive</label></li> -->
+                        <li><input type="checkbox" id="case13" name="cases" value="comitative"> <label for="caseChoice13">Comitative (-ne)</label></li>
                       </ul>
                     </div>
                   </div>

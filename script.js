@@ -10,14 +10,51 @@ let max = 100; // initial max range
 let min = 0; // initial min range
 let ranNum = 0; // stores current generated nmber
 let caseChoice = "nominative"; // default grammatical case
+let checkedCases = ["nominative"];
 let wordAnswer = ""; // correct answer in text
 let count = 0; // current streak
 let streak = 0; // highest streak
-let cases = {}; // holds case data from JSON 
+let cases = {}; // holds case data from JSON
+let ordinalCases = {}; // holds ordinalcase data from JSON
 let numView = true; // number is shown when true, word when false
+let ordinalView = false;
 
 // Event listeners
 // Enter in input textArea
+
+ordButton.addEventListener("click", function(event) {
+  ordinalView = !ordinalView;
+  genRanNum();
+  if (!ordinalView) {
+    document.getElementById("ordButton").textContent = "Switch to Ordinals"
+  } else {
+    document.getElementById("ordButton").textContent = "Switch to Basic"
+  }
+}) 
+
+ansButton.addEventListener("click", function(event) {
+  event.preventDefault();
+
+  const inputValue = document.getElementById("input").value;
+
+    // validates answer and returns corresponding error message. numView wants a text answer, !numView wants a number answer
+    if (inputValue === "") {
+      checkAnswer();
+      return;
+    }
+    if (numView && !isNaN(inputValue)) {
+      checkAnswer();
+      return;
+    }
+    if (!numView && isNaN(inputValue)) {
+      checkAnswer();
+      return;
+    }
+    // checks answer correctness and generates a new number
+    checkAnswer();
+    genRanNum();
+}) 
+
 input.addEventListener("keydown", function(event) {
   if (event.key === "Enter") {
     event.preventDefault();
@@ -150,10 +187,17 @@ document.querySelectorAll('input[name="ranges"]').forEach((input) => {
 
 // Updates case based on selection
 document.querySelectorAll('input[name="cases"]').forEach((input) => {
-input.addEventListener('change', (e) => {
-    caseChoice = e.target.value;
+input.addEventListener('change', () => {
+
+    checkedCases = Array.from(document.querySelectorAll('input[name="cases"]:checked'))
+    .map(input => input.value);
+
+    if (checkedCases.length === 0) {
+      checkedCases = ["nominative"];
+    }
+
     genRanNum();
-    console.log(caseChoice);
+    console.log(checkedCases);
     console.log(wordAnswer);
 });
 });
@@ -173,7 +217,10 @@ async function loadCases() {
   try {
     const response = await fetch('./cases.json');
     cases = await response.json();
+    const responseOrdinal = await fetch('./ordinals.json');
+    ordinalCases = await responseOrdinal.json();
     console.log("Cases data loaded:", cases);
+    console.log("Cases data loaded:", ordinalCases);
   } catch (error) {
     console.error("Error loading cases:", error);
     document.getElementById("countBox").textContent = "Error loading cases, please try to reload";
@@ -217,8 +264,13 @@ function genRanNum() {
 // Converts number into word form
 function defineAnswer() {
   // checks for above million because can expand up to million million later potentially
+  caseChoice = checkedCases[Math.floor(Math.random() * checkedCases.length)];
+  document.getElementById("displayCase").textContent = caseChoice;
+
+  const numType = getNumType();
+
   if (ranNum >= 1000000) {
-    wordAnswer = cases[ranNum][caseChoice] 
+    wordAnswer = numType[ranNum][caseChoice] 
     console.log(wordAnswer);
     return;
   }
@@ -243,31 +295,33 @@ function getHundreds(number) {
   let ones = number % 10;
   let tenshunsCase = joinNumCaseSwitch();
 
+  const numType = getNumType();
+
   let numParts = [];
 
   if (number === 100) {
-    numParts.push(cases[100][caseChoice]);
+    numParts.push(numType[100][caseChoice]);
   } else if (number === 0 ) {
-    numParts.push(cases[0][caseChoice]);
+    numParts.push(numType[0][caseChoice]);
   } else {
     if (hundreds === 1) {
-      numParts.push(cases[100][caseChoice]);
+      numParts.push(numType[100][caseChoice]);
     } else if (hundreds > 1) {
-      numParts.push(cases[hundreds][caseChoice] + cases[100][tenshunsCase]);
+      numParts.push(numType[hundreds][caseChoice] + numType[100][tenshunsCase]);
     }
   
     if (tens === 1 && ones === 0) {
-      numParts.push(cases[10][caseChoice]);
+      numParts.push(numType[10][caseChoice]);
     } else {
       if (tens === 1 && ones > 0) {
-        numParts.push(cases[ones][caseChoice] + "toista");
+        numParts.push(numType[ones][caseChoice] + "toista");
         return numParts.join("");
       } else if (tens > 1) {
-      numParts.push(cases[tens][caseChoice] + cases[10][tenshunsCase]);
+      numParts.push(numType[tens][caseChoice] + numType[10][tenshunsCase]);
       }
 
       if (ones > 0) {
-        numParts.push(cases[ones][caseChoice]);
+        numParts.push(numType[ones][caseChoice]);
       } 
     }
   }
@@ -283,10 +337,12 @@ function getThousands(number) {
 
   let numParts = [];
 
+  const numType = getNumType();
+
   if (thousands === 1) {
-    numParts.push(cases[1000][caseChoice]);
+    numParts.push(numType[1000][caseChoice]);
   } else {
-    numParts.push(getHundreds(thousands) + cases[1000][thousCase]);
+    numParts.push(getHundreds(thousands) + numType[1000][thousCase]);
   }
 
   if (hundreds > 0) {
@@ -333,7 +389,7 @@ function checkAnswer() {
     document.getElementById("input").value = "";
     return;
   } else {
-    document.getElementById("countBox").textContent = "That was incorrect you wrote " + "'" + answer + "'" + ". The correct answer was " + "'" + shownAns + "'.";
+    document.getElementById("countBox").innerHTML = "That was incorrect you wrote " + "'" + answer + "'" + ".<br>The correct answer was " + "'" + shownAns + "'.";
   }
 
   if (count > streak) {
@@ -369,7 +425,10 @@ function switchRan() {
 
 // Ensures "connecting" numbers like ten, hundred, thousand are in partitive when the overall case is nominative, otherwise matching case.
 function joinNumCaseSwitch() {
-    return (caseChoice === "nominative") ? "partitive" : caseChoice;
+    if(!ordinalView) { 
+      return (caseChoice === "nominative") ? "partitive" : caseChoice;
+    }
+    return caseChoice; 
 }
 
 // Adds .textBox styling if the number is displayed as text - margin-left. Temporary fix for readability.
@@ -381,4 +440,10 @@ function checkTextOrNum() {
   } else {
     numBox.classList.remove("textBox");
   }
+}
+
+// for switching between ordinals
+
+function getNumType() {
+  return ordinalView ? ordinalCases : cases;
 }

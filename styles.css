@@ -30,11 +30,22 @@ input {
     overflow: hidden;
 }
 
+#ansButton {
+    max-width: 100%;
+    width: 346px;
+}
+
+#genButton {
+    max-width: 100%;
+    width: 346px;
+    margin-top: 5px;
+}
+
 #switchButton {
     min-width: 155px; 
   }
 
-#genButton {
+#ordButton {
     min-width: 187px;
 }
 
