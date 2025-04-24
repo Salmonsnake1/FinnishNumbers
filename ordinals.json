@@ -222,5 +222,37 @@
         "abessive": "miljoonannetta",
         "instructive": "",
         "comitative": "miljoonansine"       
+    },
+    "eka": {
+        "nominative": "ensimmäinen",
+        "genitive": "ensimmäisen",
+        "partitive": "ensimmäistä",
+        "inessive": "ensimmäisessä",
+        "elative": "ensimmäisestä",
+        "illative": "ensimmäiseen",
+        "adessive": "ensimmäisellä",
+        "ablative": "ensimmäiseltä",
+        "allative": "ensimmäiselle",
+        "essive": "ensimmäisenä",
+        "translative": "ensimmäiseksi",
+        "abessive": "ensimmäisettä",
+        "instructive": "",
+        "comitative": "ensimmäisine"  
+    },
+    "toka": {
+        "nominative": "toinen",
+        "genitive": "toisen",
+        "partitive": "toista",
+        "inessive": "toisessa",
+        "elative": "toisesta",
+        "illative": "toiseen",
+        "adessive": "toisella",
+        "ablative": "toiselta",
+        "allative": "toiselle",
+        "essive": "toisena",
+        "translative": "toiseksi",
+        "abessive": "toisetta",
+        "instructive": "",
+        "comitative": "toisine"  
     }
 }
