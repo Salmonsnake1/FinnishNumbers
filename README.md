@@ -17,3 +17,4 @@ toggle between numeric and word form. All singular cases except instructive are 
 ## Known issues
 - Layout issues - e.g. text version of numbers don't line up nicely.
 - Responsive design is lacking.
+- Custom Range is awkward to use
