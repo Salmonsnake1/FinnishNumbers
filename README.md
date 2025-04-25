@@ -18,3 +18,4 @@ toggle between numeric and word form. All singular cases except instructive are 
 - Layout issues - e.g. text version of numbers don't line up nicely.
 - Responsive design is lacking.
 - Custom Range is awkward to use
+- yhdes appears on text view where ensimmäinen would be more common 
