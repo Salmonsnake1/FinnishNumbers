@@ -148,9 +148,21 @@ details li {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.5rem;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 #customRangeInputs input {
   flex: 1;
   padding: 0.4rem;
+  width: 100%;
+  max-width: 120px;
+}
+
+@media (min-width: 500px) {
+  #customRangeInputs {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
 }
