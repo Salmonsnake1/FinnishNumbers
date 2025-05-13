@@ -136,12 +136,6 @@ details li {
   }
 }
 
-.visually-hidden {
-  visibility: hidden;
-  display: none;
-}
-
-
 #customRangeInputs {
   display: flex;
   gap: 0.5rem;

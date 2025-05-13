@@ -137,17 +137,6 @@ document.getElementById("customMax").addEventListener('input', function () {
   }
 });
 
-// Makes min max fields visible when custom range selected
-radioButtons.forEach((radio) => {
-  radio.addEventListener('change', () => {
-    if (radio.value === 'custom' ) {
-      customRangeInputs.classList.remove('visually-hidden');
-    } else {
-      customRangeInputs.classList.add('visually-hidden');
-    }
-  });
-});
-
 // Generates a new number when gen button clicked
 genButton.addEventListener("click", function(event) {
     genRanNum();
@@ -210,7 +199,6 @@ startProg();
 async function startProg() {
   // resets everything on refresh or reload - TODO there's likely a better solution.
   document.querySelector("#range1").checked = true; 
-  customRangeInputs.classList.add("visually-hidden");
   rangeChange(1, 10);
   document.getElementById("customMin").value = 1;
   document.getElementById("customMax").value = 10;
