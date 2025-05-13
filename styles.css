@@ -162,3 +162,8 @@ details li {
   color: red;
   font-weight: bold;
 }
+
+.visually-hidden {
+  visibility: hidden;
+  display: none;
+}
