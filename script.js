@@ -209,6 +209,27 @@ startProg();
 //Functions
 // Ensures json file loads first then generates a number.
 async function startProg() {
+  // resets everything on refresh or reload - TODO there's likely a better solution.
+  document.querySelector("#range1").checked = true; 
+  customRangeInputs.classList.add("visually-hidden");
+  rangeChange(1, 10);
+  document.getElementById("customMin").value = 1;
+  document.getElementById("customMax").value = 10;
+  document.querySelectorAll('input[name="cases"]').forEach((box) => {
+    box.checked = (box.id === "case1");
+  });
+  checkedCases = ["nominative"];
+  caseChoice = "nominative";
+  numView = true;
+  ordinalView = false;
+  document.getElementById("ordButton").textContent = "Switch to Ordinals";
+  document.getElementById("switchButton").textContent = "Switch to Text";
+  count = 0;
+  streak = 0;
+  document.getElementById("input").value = "";
+  document.getElementById("input").style.height = "auto";
+  document.getElementById("input").rows = 1;
+
   await loadCases();     
   genRanNum();                
 }
