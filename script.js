@@ -199,9 +199,7 @@ input.addEventListener('change', () => {
     }
 
     genRanNum();
-    console.log(checkedCases);
-    console.log(wordAnswer);
-});
+  });
 });
 
 // Starts the program
@@ -242,8 +240,6 @@ async function loadCases() {
     cases = await response.json();
     const responseOrdinal = await fetch('./ordinals.json');
     ordinalCases = await responseOrdinal.json();
-    console.log("Cases data loaded:", cases);
-    console.log("Cases data loaded:", ordinalCases);
   } catch (error) {
     console.error("Error loading cases:", error);
     document.getElementById("countBox").textContent = "Error loading cases, please try to reload";
@@ -272,8 +268,6 @@ function genRanNum() {
     
     defineAnswer();
 
-    console.log(ranNum);
-
     if (numView) {
       document.getElementById("numBox").textContent = ranNum; 
     } else {
@@ -295,19 +289,16 @@ function defineAnswer() {
 
   if (ranNum >= 1000000) {
     wordAnswer = numType[ranNum][caseChoice] 
-    console.log(wordAnswer);
     return;
   }
 
   if (ranNum >= 1000) {
     wordAnswer = getThousands(ranNum);
-    console.log(wordAnswer);
     return;
   }
 
   if (ranNum >= 0) {
     wordAnswer = getHundreds(ranNum);
-    console.log(wordAnswer);
     return;
   }
 }
@@ -352,7 +343,6 @@ function getHundreds(number) {
           let ekaTokaParts = [...numParts];
           ekaTokaParts.push(numType[onesChoice][caseChoice]);
           ekatokaAnswer = ekaTokaParts.join("");
-          console.log(ekatokaAnswer);
         }
         numParts.push(numType[ones][caseChoice]);
       } 
@@ -392,9 +382,7 @@ function checkAnswer() {
   const answer = document.getElementById("input").value.trim().toLowerCase();
   let correctAns = false;
   let shownAns = "";
-  console.log(answer);
-  console.log(wordAnswer);
-
+  
   if (!answer) {
     document.getElementById("countBox").textContent = "Please enter an answer!"
     return;
