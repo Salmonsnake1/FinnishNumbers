@@ -2,7 +2,7 @@ const genButton = document.getElementById("genButton");
 const inputForm = document.getElementById("form");
 const switchButton = document.getElementById("switchButton");
 const radioButtons = document.querySelectorAll('input[name="ranges"]');
-const customInputs = document.getElementById('customRangeInputs');
+const customRangeInputs = document.getElementById('customRangeInputs');
 const input = document.getElementById("input");
 
 
@@ -139,10 +139,10 @@ document.getElementById("customMax").addEventListener('input', function () {
 // Makes min max fields visible when custom range selected
 radioButtons.forEach((radio) => {
   radio.addEventListener('change', () => {
-    if (radio.value === 'custom') {
-      customInputs.classList.remove('visually-hidden');
+    if (radio.value === 'custom' ) {
+      customRangeInputs.classList.remove('visually-hidden');
     } else {
-      customInputs.classList.add('visually-hidden');
+      customRangeInputs.classList.add('visually-hidden');
     }
   });
 });
@@ -428,11 +428,7 @@ function switchRan() {
   document.getElementById("numBox").textContent = numView ? ranNum : wordAnswer;
   content = document.getElementById("numBox").textContent;
 
-  if (content.toString().length > 37) {
-    document.getElementById("numBox").style.fontSize = "16px";
-  } else {
-    document.getElementById("numBox").style.fontSize = "48px";
-  }
+  
 
   document.getElementById("switchButton").textContent = numView ? "Switch to Text" : "Switch to Number";
   checkTextOrNum();

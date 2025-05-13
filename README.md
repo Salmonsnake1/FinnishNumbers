@@ -11,11 +11,9 @@ toggle between numeric and word form. All singular cases except instructive are 
 - Can switch between basic numbers and ordinals - ensimmäinen/yhdes and toinen/kahdes. Either or are both accepted where both are possible. 
 
 ## Potentially upcoming features
-- Plural practice
-- Timed mode
+- Plural
 
 ## Known issues
 - Layout issues - e.g. text version of numbers don't line up nicely.
-- Responsive design is lacking.
 - Custom Range is awkward to use
-- yhdes appears on text view where ensimmäinen would be more common 
+ 

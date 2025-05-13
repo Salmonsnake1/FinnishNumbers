@@ -1,51 +1,156 @@
-.numBox {
-    width: auto;
-    max-width: 80%;
-    margin: 0 auto;
-    font-size: 3rem; 
-    font-weight: bold;
-    padding: 20px 0;
+body {
+  font-family: sans-serif;
+  line-height: 1.6;
+  background: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
 }
-/* Adds to the .numBox when of a certain string length. */
-.textBox {
-    margin-left: -30px;
+
+header {
+  background-color: #009dc4;
+  color: white;
+  padding: 1rem 2rem;
+  width: 100%;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+main {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.button-group button,
+#ansButton,
+#genButton {
+  background-color: #009dc4;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1 1 45%;
+  min-width: 140px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.button-group button:hover,
+#ansButton:hover,
+#genButton:hover {
+  background-color: #007da1;
+}
+
+.numBox {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 1rem 0;
+  word-break: break-word;
+}
+
+#displayCase {
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+#input {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  resize: none;
+}
+
+
+#ansButton,
+#genButton {
+  display: inline-block;
+  margin: 0.5rem auto;
+}
+
+
+#countBox,
+#streakBox {
+  text-align: center;
+  font-weight: bold;
+}
+
+
+details ul {
+  list-style: none;
+  padding-left: 0;
 }
 
 details li {
-    margin-bottom: 0.5rem; 
+  margin-bottom: 0.5rem;
 }
 
-label {
-    margin-left: 0.5rem;
-}
-
-input {
-    max-width: 89%;
-}
-/* keeps input same size as switch and gen buttons, switchButton doesnt reduce when text changes */
-#input {
-    max-width: 100%;
-    width: 346px;
-    resize: none;
-    overflow: hidden;
-}
-
-#ansButton {
-    max-width: 100%;
-    width: 346px;
-}
-
-#genButton {
-    max-width: 100%;
-    width: 346px;
-    margin-top: 5px;
-}
-
-#switchButton {
-    min-width: 155px; 
+/* Responsive tweaks */
+@media (min-width: 768px) {
+  .button-group button,
+  #ansButton,
+  #genButton {
+    flex: 1 1 40%;
   }
-
-#ordButton {
-    min-width: 187px;
 }
 
+.case-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0rem;
+  justify-content: space-between;
+}
+
+.case-list li {
+  width: 48%;
+  text-align: left;
+}
+
+@media (max-width: 500px) {
+  .case-list li {
+    width: 100%; 
+  }
+}
+
+.visually-hidden {
+  visibility: hidden;
+}
+
+
+#customRangeInputs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+#customRangeInputs input {
+  flex: 1;
+  padding: 0.4rem;
+}
