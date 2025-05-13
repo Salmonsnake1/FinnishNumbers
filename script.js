@@ -17,8 +17,9 @@ let streak = 0; // highest streak
 let cases = {}; // holds case data from JSON
 let ordinalCases = {}; // holds ordinalcase data from JSON
 let numView = true; // number is shown when true, word when false
-let ordinalView = false;
-let ekatokaAnswer = "";
+let ordinalView = false; // sets so basic numbers first
+let ekatokaAnswer = ""; // sets for the ensimmäinen, toinen, yhdes, kahdes switch
+let displayWordAnswer = ""; // for displaying the answer to the user
 
 // Event listeners
 // Enter in input textArea
@@ -276,7 +277,8 @@ function genRanNum() {
     if (numView) {
       document.getElementById("numBox").textContent = ranNum; 
     } else {
-      document.getElementById("numBox").textContent = wordAnswer; 
+      document.getElementById("numBox").innerHTML = displayWordAnswer; 
+      
     }
 
     document.getElementById("input").focus();
@@ -337,7 +339,7 @@ function getHundreds(number) {
     } else {
       if (tens === 1 && ones > 0) {
         numParts.push(numType[ones][caseChoice] + "toista");
-        return numParts.join("");
+        return numParts.join("&shy;");
       } else if (tens > 1) {
       numParts.push(numType[tens][caseChoice] + numType[10][tenshunsCase]);
       }
@@ -356,8 +358,9 @@ function getHundreds(number) {
       } 
     }
   }
-
+  displayWordAnswer = numParts.join("&shy;");
   return numParts.join("");
+  
 }
 
 // Converts the number to word for thousands and getHundreds added from above if needed.
@@ -380,6 +383,7 @@ function getThousands(number) {
     numParts.push(getHundreds(hundreds));
   }
 
+  displayWordAnswer = numParts.join("&shy;");
   return numParts.join("");
 }
 
@@ -425,7 +429,9 @@ function checkAnswer() {
     document.getElementById("input").value = "";
     return;
   } else {
-    document.getElementById("countBox").innerHTML = "That was incorrect you wrote " + "'" + answer + "'" + ".<br>The correct answer was " + "'" + shownAns + "'.";
+    document.getElementById("countBox").innerHTML =
+    "That was incorrect, you wrote '<span class='red-word'>" + answer + "</span>'.<br>" +
+    "The correct answer was '<span class='red-word'>" + shownAns + "</span>'.";
   }
 
   if (count > streak) {
@@ -446,7 +452,7 @@ function switchRan() {
 
   numView = !numView;
 
-  document.getElementById("numBox").textContent = numView ? ranNum : wordAnswer;
+  document.getElementById("numBox").innerHTML = numView ? ranNum : displayWordAnswer;
   content = document.getElementById("numBox").textContent;
 
   
@@ -461,17 +467,6 @@ function joinNumCaseSwitch() {
       return (caseChoice === "nominative") ? "partitive" : caseChoice;
     }
     return caseChoice; 
-}
-
-// Adds .textBox styling if the number is displayed as text - margin-left. Temporary fix for readability.
-function checkTextOrNum() {
-  const numBox = document.getElementById("numBox");
-
-  if (isNaN(numBox.textContent)) {
-    numBox.classList.add("textBox");
-  } else {
-    numBox.classList.remove("textBox");
-  }
 }
 
 // for switching between ordinals
