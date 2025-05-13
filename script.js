@@ -261,6 +261,7 @@ function genRanNum() {
       document.getElementById("countBox").textContent = "Incorrect ranges selected, either adjust custom range or reload page";
       return;
     }
+    ekatokaAnswer = "";
 
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
@@ -274,7 +275,6 @@ function genRanNum() {
       document.getElementById("numBox").innerHTML = displayWordAnswer; 
       
     }
-
     document.getElementById("input").focus();
     
 }
@@ -343,6 +343,7 @@ function getHundreds(number) {
           let ekaTokaParts = [...numParts];
           ekaTokaParts.push(numType[onesChoice][caseChoice]);
           ekatokaAnswer = ekaTokaParts.join("");
+          console.log(ekatokaAnswer);
         }
         numParts.push(numType[ones][caseChoice]);
       } 
@@ -417,9 +418,15 @@ function checkAnswer() {
     document.getElementById("input").value = "";
     return;
   } else {
+    if (ekatokaAnswer === "") {
     document.getElementById("countBox").innerHTML =
     "That was incorrect, you wrote '<span class='red-word'>" + answer + "</span>'.<br>" +
     "The correct answer was '<span class='red-word'>" + shownAns + "</span>'.";
+    } else {
+      document.getElementById("countBox").innerHTML =
+    "That was incorrect, you wrote '<span class='red-word'>" + answer + "</span>'.<br>" +
+    "The correct answer was '<span class='red-word'>" + shownAns + "</span>' or '<span class='red-word'>" + ekatokaAnswer + "</span>'.";
+    }
   }
 
   if (count > streak) {
@@ -446,7 +453,6 @@ function switchRan() {
   
 
   document.getElementById("switchButton").textContent = numView ? "Switch to Text" : "Switch to Number";
-  checkTextOrNum();
 }
 
 // Ensures "connecting" numbers like ten, hundred, thousand are in partitive when the overall case is nominative, otherwise matching case.
