@@ -266,9 +266,9 @@ function genRanNum() {
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
     ranNum = Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); 
-    
-    defineAnswer();
 
+    defineAnswer();
+    
     if (numView) {
       document.getElementById("numBox").textContent = ranNum; 
     } else {
@@ -343,7 +343,6 @@ function getHundreds(number) {
           let ekaTokaParts = [...numParts];
           ekaTokaParts.push(numType[onesChoice][caseChoice]);
           ekatokaAnswer = ekaTokaParts.join("");
-          console.log(ekatokaAnswer);
         }
         numParts.push(numType[ones][caseChoice]);
       } 
