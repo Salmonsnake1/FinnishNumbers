@@ -35,7 +35,7 @@ selectAllBox.addEventListener('change', () => {
     checkbox.checked = isChecked;
   });
 
-  updateCheckedCases(); // Trigger the same logic to update the array
+  updateCheckedCases(); 
 });
 
 // Updates selectall if one is unchecked. 
@@ -46,8 +46,7 @@ caseCheckboxes.forEach((checkbox) => {
   });
 });
 
-
-
+// switching from basic to ordinals
 ordButton.addEventListener("click", function(event) {
   ordinalView = !ordinalView;
   genRanNum();
@@ -57,7 +56,7 @@ ordButton.addEventListener("click", function(event) {
     document.getElementById("ordButton").textContent = "Switch to Basic"
   }
 }) 
-
+// for user input
 ansButton.addEventListener("click", function(event) {
   event.preventDefault();
 
@@ -80,7 +79,7 @@ ansButton.addEventListener("click", function(event) {
     checkAnswer();
     genRanNum();
 }) 
-
+// for user input
 input.addEventListener("keydown", function(event) {
   if (event.key === "Enter") {
     event.preventDefault();
@@ -260,6 +259,7 @@ async function loadCases() {
   }
 }
 
+// updates array based on selection
 function updateCheckedCases() {
   checkedCases = Array.from(document.querySelectorAll('input[name="cases"]:checked'))
     .map(input => input.value);
