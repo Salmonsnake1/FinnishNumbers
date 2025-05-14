@@ -4,6 +4,8 @@ const switchButton = document.getElementById("switchButton");
 const radioButtons = document.querySelectorAll('input[name="ranges"]');
 const customRangeInputs = document.getElementById('customRangeInputs');
 const input = document.getElementById("input");
+const selectAllBox = document.getElementById("selectAllCases");
+const caseCheckboxes = document.querySelectorAll('input[name="cases"]');
 
 
 let max = 100; // initial max range 
@@ -22,7 +24,29 @@ let ekatokaAnswer = ""; // sets for the ensimmäinen, toinen, yhdes, kahdes swit
 let displayWordAnswer = ""; // for displaying the answer to the user
 
 // Event listeners
-// Enter in input textArea
+
+// Updates checkboxes when "Select All" changes
+selectAllBox.addEventListener('change', () => {
+  const isChecked = selectAllBox.checked;
+
+  caseCheckboxes.forEach(checkbox => {
+    if (!isChecked && checkbox.value === 'nominative') return;
+
+    checkbox.checked = isChecked;
+  });
+
+  updateCheckedCases(); // Trigger the same logic to update the array
+});
+
+// Updates selectall if one is unchecked. 
+caseCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", function () {
+    const allChecked = Array.from(caseCheckboxes).every(cb => cb.checked);
+    selectAllBox.checked = allChecked;
+  });
+});
+
+
 
 ordButton.addEventListener("click", function(event) {
   ordinalView = !ordinalView;
@@ -189,18 +213,8 @@ document.querySelectorAll('input[name="ranges"]').forEach((input) => {
 
 // Updates case based on selection
 document.querySelectorAll('input[name="cases"]').forEach((input) => {
-input.addEventListener('change', () => {
-
-    checkedCases = Array.from(document.querySelectorAll('input[name="cases"]:checked'))
-    .map(input => input.value);
-
-    if (checkedCases.length === 0) {
-      checkedCases = ["nominative"];
-    }
-
-    genRanNum();
-  });
-});
+  input.addEventListener('change', updateCheckedCases);
+});   
 
 // Starts the program
 startProg();
@@ -246,7 +260,16 @@ async function loadCases() {
   }
 }
 
+function updateCheckedCases() {
+  checkedCases = Array.from(document.querySelectorAll('input[name="cases"]:checked'))
+    .map(input => input.value);
 
+  if (checkedCases.length === 0) {
+    checkedCases = ["nominative"];
+  }
+
+  genRanNum();
+}
 
 // Sets new range for num generation based on user selection
 function rangeChange(lowest, highest) {
