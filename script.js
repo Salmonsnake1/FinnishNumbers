@@ -283,7 +283,20 @@ function genRanNum() {
 function defineAnswer() {
   // checks for above million because can expand up to million million later potentially
   caseChoice = checkedCases[Math.floor(Math.random() * checkedCases.length)];
-  document.getElementById("displayCase").textContent = caseChoice;
+  // checks for the value in the list that corresponds and sets the textContent to the label
+  const input = document.querySelector(`input[name="cases"][value="${caseChoice}"]`);
+
+  if (input) {
+    const label = document.querySelector(`label[for="${input.id}"]`);
+    if (label) {
+      document.getElementById("displayCase").textContent = label.textContent;
+    } else {
+      document.getElementById("displayCase").textContent = caseChoice; 
+    }
+  } else {
+    document.getElementById("displayCase").textContent = caseChoice;
+  }
+
 
   const numType = getNumType();
 
