@@ -12,6 +12,7 @@ toggle between numeric and word form. All singular cases except instructive are 
 
 ## Potentially upcoming features
 - Plural
+- Finnish localisation
 
 ## Known issues
 - Layout issues - e.g. text version of numbers don't line up nicely.
